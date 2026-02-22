@@ -20,14 +20,14 @@ export const userRegister = TryCatch(async (req, res, next) => {
 
   if (role === "recruiter") {
     const [user] = await sql`
-      INSERT INTO users (nama, email, password, phone_number, role, bio) VALUES (${name}, ${email}, ${hashedPassword}, ${phoneNumber}, ${role}, ${bio}) RETURNING user_id, name, email, phone_number, role, created_at
+      INSERT INTO users (name, email, password, phone_number, role, bio) VALUES (${name}, ${email}, ${hashedPassword}, ${phoneNumber}, ${role}, ${bio}) RETURNING user_id, name, email, phone_number, role, created_at
     `;
 
     registeredUser = user;
   } else if (role === "jobseeker") {
     const file = req.file;
     const [user] = await sql`
-      INSERT INTO users (nama, email, password, phone_number, role) VALUES (${name}, ${email}, ${hashedPassword}, ${phoneNumber}, ${role}) RETURNING user_id, name, email, phone_number, role, created_at
+      INSERT INTO users (name, email, password, phone_number, role) VALUES (${name}, ${email}, ${hashedPassword}, ${phoneNumber}, ${role}) RETURNING user_id, name, email, phone_number, role, created_at
     `;
 
     registeredUser = user;

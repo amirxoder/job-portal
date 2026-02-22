@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm install && tsc",
+    "dev": "concurrently \"tsc --watch\" \"nodemon dist/index.js\"",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "cloudinary": "^2.9.0",
     "cors": "^2.8.6",
@@ -21,6 +24,7 @@
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.6",
     "concurrently": "^9.2.1",
+    "nodemon": "^3.1.14",
     "typescript": "^5.9.3"
   }
 }
