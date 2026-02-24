@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.route.js";
 const app = express();
 
 // Middleware to parse JSON bodies and encode URL-encoded data
+// parse form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
