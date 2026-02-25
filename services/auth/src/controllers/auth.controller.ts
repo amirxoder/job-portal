@@ -5,11 +5,11 @@ import ErrorHandler from "../utils/errorHandler.js";
 import { TryCatch } from "../utils/TryCatch.js";
 import bcrypt from "bcrypt";
 import { env } from "../config/env.js";
+import jwt from "jsonwebtoken";
 
 export const userRegister = TryCatch(async (req, res, next) => {
-  console.log("Received registration request with body:", req.body);
   const { name, email, password, phoneNumber, role, bio } = req.body;
-  console.log(req.body);
+
   if (!name || !email || !password || !phoneNumber || !role) {
     throw new ErrorHandler(400, "All fields are required");
   }
@@ -38,7 +38,7 @@ export const userRegister = TryCatch(async (req, res, next) => {
 
     const fileBuffer = getBuffer(file);
 
-    if (!fileBuffer || fileBuffer.content) {
+    if (!fileBuffer || !fileBuffer.content) {
       throw new ErrorHandler(
         400,
         "Invalid resume file, Failed to process the resume file",
@@ -59,5 +59,14 @@ export const userRegister = TryCatch(async (req, res, next) => {
     registeredUser = user;
   }
 
-  res.json(registeredUser);
+  const token = jwt.sign(
+    { id: registeredUser?.user_id },
+    env.JWT_SECRET as string,
+    { expiresIn: "1d" },
+  );
+
+  return res.status(201).json({
+    message: "User registered successfully",
+    registeredUser,
+  });
 });

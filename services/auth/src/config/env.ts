@@ -6,4 +6,5 @@ export const env = {
   PORT: process.env.PORT!,
   DB_URI: process.env.DB_URI!,
   UPLOAD_SERVICE_URL: process.env.UPLOAD_SERVICE_URL!,
+  JWT_SECRET: process.env.JWT_SECRET! as string,
 };
